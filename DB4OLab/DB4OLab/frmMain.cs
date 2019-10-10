@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Db4objects.Db4o.Linq;
 
 namespace DB4OLab
 {
@@ -62,10 +63,13 @@ namespace DB4OLab
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            //DBHelper.OpenDatabase();
-            //var data = from Student sv in DBHelper.Database where (
-            //           sv.FullName.ToLower().Contains(txtHoTen.Text.ToLower()) && sv.RegisterYear == 2016) select sv;
-            //DBHelper.CloseDatabase();
+            DBHelper.OpenDatabase();
+            var data = (from Student sv in DBHelper.Database
+                       where (
+sv.FullName.ToLower().Contains(txtHoTen.Text.ToLower()) && sv.RegisterYear == 2016)
+                       select sv).ToList();
+            dataGridView1.DataSource = data;
+            DBHelper.CloseDatabase();
         }
 
         private void Button3_Click(object sender, EventArgs e)
